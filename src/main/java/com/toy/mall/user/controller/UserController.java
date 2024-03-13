@@ -1,5 +1,6 @@
 package com.toy.mall.user.controller;
 
+import com.toy.mall.user.controller.request.UserAddressRequest;
 import com.toy.mall.user.controller.request.UserRegistRequest;
 import com.toy.mall.user.service.UserService;
 import jakarta.validation.Valid;
@@ -21,5 +22,13 @@ public class UserController {
         userService.regist(userRegistRequest.toServiceRequest());
 
         return ResponseEntity.ok("회원가입 완료");
+    }
+
+    @PostMapping("/address")
+    public ResponseEntity<?> change(@Valid UserAddressRequest userAddressRequest) {
+
+        userService.changeAddress(userAddressRequest.toServiceRequest());
+
+        return ResponseEntity.ok("주소 수정 완료");
     }
 }

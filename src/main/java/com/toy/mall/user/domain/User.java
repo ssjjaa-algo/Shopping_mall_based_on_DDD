@@ -36,4 +36,8 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
+
+    public void changeAddress(Address address) {
+        this.address = address;
+    }
 }

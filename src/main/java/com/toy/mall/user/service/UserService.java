@@ -16,6 +16,7 @@ public class UserService {
     private final UserCommandPort userCommandPort;
     private final UserQueryPort userQueryPort;
 
+    @Transactional
     public void regist(UserServiceRegistRequest serviceRequest) {
 
         if (userQueryPort.existsByLoginId(serviceRequest.getLoginId())) {

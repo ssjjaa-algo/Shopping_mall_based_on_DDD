@@ -1,16 +1,12 @@
 package com.toy.mall.user.domain;
 
 import com.toy.mall.cart.domain.Cart;
-import com.toy.mall.order.domain.Order;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -35,5 +31,9 @@ public class User {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-
+    public User(String loginId, String phoneNumber, Address address) {
+        this.loginId = loginId;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
 }

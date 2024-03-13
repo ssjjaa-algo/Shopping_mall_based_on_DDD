@@ -25,7 +25,7 @@ public class UserRepository implements UserCommandPort, UserQueryPort {
     }
 
     @Override
-    public Optional<User> findByLogin(String loginId) {
+    public Optional<User> findByLoginId(String loginId) {
         return userJpaRepository.findByLoginId(loginId);
     }
 

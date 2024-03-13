@@ -40,7 +40,7 @@ class UserServiceTest {
 
         //then
 
-        User user = userRepository.findByLogin("testId").orElseThrow();
+        User user = userRepository.findByLoginId("testId").orElseThrow();
         Assertions.assertThat(user.getLoginId()).isEqualTo("testId");
 
     }

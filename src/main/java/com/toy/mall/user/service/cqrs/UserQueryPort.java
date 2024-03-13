@@ -9,5 +9,5 @@ public interface UserQueryPort {
 
     Optional<User> findById(Long id);
 
-    Optional<User> findByLogin(String testId);
+    Optional<User> findByLoginId(String testId);
 }

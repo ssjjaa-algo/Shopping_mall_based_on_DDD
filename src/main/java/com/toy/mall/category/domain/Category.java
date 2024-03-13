@@ -31,7 +31,29 @@ public class Category {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Category parent;
 
-
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<Category> child = new ArrayList<>();
+
+    private Category(String name, Category parent) {
+        this.name = name;
+        this.parent = parent;
+        this.depth = parent == null ? 1 : parent.getDepth() + 1;
+    }
+
+    // 연관관계 편의 메서드
+    public void addChildCategory(Category category) {
+        this.child.add(category);
+        category.parent = this;
+    }
+
+    public static Category createCategory(String name, Category parent) {
+
+        Category category = new Category(name, parent);
+        if (parent != null) {
+            parent.addChildCategory(category);
+        }
+        return category;
+    }
+
+
 }

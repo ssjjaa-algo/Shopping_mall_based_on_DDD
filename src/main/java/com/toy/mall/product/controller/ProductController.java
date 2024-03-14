@@ -5,9 +5,7 @@ import com.toy.mall.product.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,5 +19,11 @@ public class ProductController {
         productService.create(productCreateRequest.toServiceRequest());
 
         return ResponseEntity.ok("상품 생성 완료");
+    }
+
+    @GetMapping("/{categoryName}")
+    public ResponseEntity<?> getProducts(@PathVariable String categoryName, int pageNum) {
+
+        return ResponseEntity.ok().body(productService.getProducts(categoryName, pageNum));
     }
 }

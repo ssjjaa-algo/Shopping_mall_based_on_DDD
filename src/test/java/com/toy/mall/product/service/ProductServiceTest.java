@@ -6,10 +6,12 @@ import com.toy.mall.category.service.request.CategoryServiceCreateRequest;
 import com.toy.mall.product.controller.request.ProductCreateRequest;
 import com.toy.mall.product.domain.Product;
 import com.toy.mall.product.repository.ProductRepository;
+import com.toy.mall.product.service.response.ProductResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -69,6 +71,41 @@ class ProductServiceTest {
         //when & then
         productService.create(request1.toServiceRequest());
         assertThrows(IllegalStateException.class, () -> productService.create(request1.toServiceRequest()));
+    }
+
+    @Test
+    @DisplayName("특정 카테고리에 해당하는 상품 찾기")
+    public void productsByCategory() {
+        //given
+        categoryDummyData();
+        productDummyData();
+        //when
+
+        Page<ProductResponse> products = productService.getProducts("cloth", 0);
+        //then
+
+        List<ProductResponse> contents = products.getContent();
+        long total = products.getTotalElements();
+
+        assertThat(contents.size()).isEqualTo(5);
+        assertThat(total).isEqualTo(5);
+
+    }
+
+    private void productDummyData() {
+
+        ProductCreateRequest p1 = new ProductCreateRequest("니트1","knit",3000,30);
+        ProductCreateRequest p2 = new ProductCreateRequest("니트2","knit",3000,30);
+        ProductCreateRequest p3 = new ProductCreateRequest("맨1","mantoman",3000,30);
+        ProductCreateRequest p4 = new ProductCreateRequest("맨2","mantoman",3000,30);
+        ProductCreateRequest p5 = new ProductCreateRequest("바지1","bottom",3000,30);
+        ProductCreateRequest p6 = new ProductCreateRequest("차1","car",3000,30);
+
+        List <ProductCreateRequest> given = List.of(p1, p2, p3, p4, p5, p6);
+
+        for (ProductCreateRequest request : given) {
+            productService.create(request.toServiceRequest());
+        }
     }
 
     private void categoryDummyData() {

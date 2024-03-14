@@ -7,8 +7,13 @@ import com.toy.mall.product.domain.ProductCategory;
 import com.toy.mall.product.service.cqrs.ProductCommandPort;
 import com.toy.mall.product.service.cqrs.ProductQueryPort;
 import com.toy.mall.product.service.request.ProductServiceCreateRequest;
+import com.toy.mall.product.service.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +41,15 @@ public class ProductService {
         product.addCategory(productCategory);
 
         productCommandPort.save(product);
+    }
+
+    public Page<ProductResponse> getProducts(String categoryName, int pageNum) {
+
+        Category category = categoryQueryPort.findByName(categoryName);
+        List<Long> categoriesId = category.extractLowestCategoryIds();
+
+        return productQueryPort.findDistinctByCategories_Category_IdIn(categoriesId,
+                PageRequest.of(pageNum, 15));
+
     }
 }

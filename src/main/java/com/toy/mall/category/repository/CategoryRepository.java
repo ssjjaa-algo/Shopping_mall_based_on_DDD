@@ -6,6 +6,7 @@ import com.toy.mall.category.service.cqrs.CategoryQueryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -27,6 +28,11 @@ public class CategoryRepository implements CategoryCommandPort, CategoryQueryPor
     @Override
     public Category findByName(String name) {
         return categoryJpaRepository.findByName(name);
+    }
+
+    @Override
+    public List<Category> findByParentIsNull() {
+        return categoryJpaRepository.findByParentIsNull();
     }
 
     @Override

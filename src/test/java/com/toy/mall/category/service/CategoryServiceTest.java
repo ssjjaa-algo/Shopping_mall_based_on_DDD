@@ -45,19 +45,7 @@ class CategoryServiceTest {
     public void createManyCategorySuccess() {
 
         //given
-        CategoryServiceCreateRequest r1 = new CategoryServiceCreateRequest(null, "cloth");
-        CategoryServiceCreateRequest r2 = new CategoryServiceCreateRequest(1L, "top");
-        CategoryServiceCreateRequest r3 = new CategoryServiceCreateRequest(1L, "bottom");
-        CategoryServiceCreateRequest r4 = new CategoryServiceCreateRequest(2L, "knit");
-        CategoryServiceCreateRequest r5 = new CategoryServiceCreateRequest(2L, "mantoman");
-        CategoryServiceCreateRequest r6 = new CategoryServiceCreateRequest(null, "car");
-
-        List<CategoryServiceCreateRequest> given = List.of(r1,r2,r3,r4,r5,r6);
-        //when
-
-        for (CategoryServiceCreateRequest request : given) {
-            categoryService.create(request);
-        }
+        categoryDummyData();
 
         //then
         Category category1 = categoryRepository.findByName("cloth");
@@ -102,4 +90,19 @@ class CategoryServiceTest {
         assertThrows(IllegalStateException.class, () -> categoryService.create(request2));
     }
 
+    private void categoryDummyData() {
+        CategoryServiceCreateRequest r1 = new CategoryServiceCreateRequest(null, "cloth");
+        CategoryServiceCreateRequest r2 = new CategoryServiceCreateRequest(1L, "top");
+        CategoryServiceCreateRequest r3 = new CategoryServiceCreateRequest(1L, "bottom");
+        CategoryServiceCreateRequest r4 = new CategoryServiceCreateRequest(2L, "knit");
+        CategoryServiceCreateRequest r5 = new CategoryServiceCreateRequest(2L, "mantoman");
+        CategoryServiceCreateRequest r6 = new CategoryServiceCreateRequest(null, "car");
+
+        List<CategoryServiceCreateRequest> given = List.of(r1,r2,r3,r4,r5,r6);
+        //when
+
+        for (CategoryServiceCreateRequest request : given) {
+            categoryService.create(request);
+        }
+    }
 }

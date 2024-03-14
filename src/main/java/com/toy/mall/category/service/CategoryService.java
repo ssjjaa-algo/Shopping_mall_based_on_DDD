@@ -4,8 +4,13 @@ import com.toy.mall.category.domain.Category;
 import com.toy.mall.category.service.cqrs.CategoryCommandPort;
 import com.toy.mall.category.service.cqrs.CategoryQueryPort;
 import com.toy.mall.category.service.request.CategoryServiceCreateRequest;
+import com.toy.mall.category.service.response.CategoryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -29,5 +34,14 @@ public class CategoryService {
         return parentId == null ? null : categoryQueryPort.findById(parentId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 부모 카테고리 값 입력"));
 
+    }
+
+    public List<CategoryResponse> getAllCategories() {
+
+        List<Category> roots = categoryQueryPort.findByParentIsNull();
+
+        return roots.stream()
+                .map(CategoryResponse::of)
+                .collect(toList());
     }
 }

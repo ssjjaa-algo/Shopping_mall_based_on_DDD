@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.LAZY;
+import static java.util.stream.Collectors.toList;
 
 @Entity
 @Getter
@@ -44,6 +45,19 @@ public class Category {
     public void addChildCategory(Category category) {
         this.child.add(category);
         category.parent = this;
+    }
+
+    public List<Long> extractLowestCategoryIds () {
+
+        if (this.getChild() == null || this.getChild().isEmpty()) {
+            return List.of(this.getId());
+        }
+
+        return this.getChild()
+                .stream()
+                .map(Category::extractLowestCategoryIds)
+                .flatMap(List::stream)
+                .collect(toList());
     }
 
     public static Category createCategory(String name, Category parent) {

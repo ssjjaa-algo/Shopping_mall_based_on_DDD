@@ -12,6 +12,11 @@ public class CategoryCreateRequest {
     @NotBlank(message = "카테고리 이름은 필수")
     private String name;
 
+    public CategoryCreateRequest(Long parentId, String name) {
+        this.parentId = parentId;
+        this.name = name;
+    }
+
     public CategoryServiceCreateRequest toServiceRequest() {
 
         return new CategoryServiceCreateRequest(parentId, name);

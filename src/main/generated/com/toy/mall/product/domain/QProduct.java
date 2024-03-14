@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -18,6 +19,8 @@ public class QProduct extends EntityPathBase<Product> {
     private static final long serialVersionUID = 1129731233L;
 
     public static final QProduct product = new QProduct("product");
+
+    public final ListPath<ProductCategory, QProductCategory> categories = this.<ProductCategory, QProductCategory>createList("categories", ProductCategory.class, QProductCategory.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

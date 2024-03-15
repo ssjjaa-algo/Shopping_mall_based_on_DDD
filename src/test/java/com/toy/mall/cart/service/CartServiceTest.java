@@ -3,6 +3,7 @@ package com.toy.mall.cart.service;
 import com.toy.mall.cart.controller.request.AddProductToCartRequest;
 import com.toy.mall.cart.domain.Cart;
 import com.toy.mall.cart.repository.CartRepository;
+import com.toy.mall.cart.service.request.DeleteProductFromCartServiceRequest;
 import com.toy.mall.category.repository.CategoryRepository;
 import com.toy.mall.category.service.CategoryService;
 import com.toy.mall.category.service.request.CategoryServiceCreateRequest;
@@ -75,6 +76,28 @@ class CartServiceTest {
 
         //then
         Assertions.assertThrows(IllegalStateException.class, () -> cartService.add(r.toServiceRequest()));
+    }
+
+    @Test
+    @DisplayName("장바구니 상품 삭제")
+    public void deleteCart() {
+        //given
+        categoryDummyData();
+        productDummyData();
+        userService.regist(getUserServiceRegistRequest());
+        //when
+
+        AddProductToCartRequest r = new AddProductToCartRequest(1L, "testId",2);
+        AddProductToCartRequest r1 = new AddProductToCartRequest(2L, "testId",17);
+        cartService.add(r.toServiceRequest());
+        cartService.add(r1.toServiceRequest());
+
+        cartService.delete(new DeleteProductFromCartServiceRequest(List.of(1L, 2L), "testId"));
+        //then
+
+        List<Cart> carts = cartRepository.findByUserId(1L);
+
+        assertThat(carts.size()).isEqualTo(0);
     }
 
     private void productDummyData() {

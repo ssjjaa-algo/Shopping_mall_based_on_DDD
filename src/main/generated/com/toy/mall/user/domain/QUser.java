@@ -24,8 +24,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final QAddress address;
 
-    public final com.toy.mall.cart.domain.QCart cart;
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath loginId = createString("loginId");
@@ -51,7 +49,6 @@ public class QUser extends EntityPathBase<User> {
     public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.address = inits.isInitialized("address") ? new QAddress(forProperty("address")) : null;
-        this.cart = inits.isInitialized("cart") ? new com.toy.mall.cart.domain.QCart(forProperty("cart")) : null;
     }
 
 }

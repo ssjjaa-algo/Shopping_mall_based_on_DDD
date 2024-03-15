@@ -38,7 +38,7 @@ public class Product {
         this.price = price;
         this.stock = stock;
         this.categories = new ArrayList<>();
-        this.status = SellingStatus.WAITING;
+        this.status = SellingStatus.SELLING;
     }
 
     public static Product create(String name, int price, int stockQuantity) {
@@ -48,5 +48,16 @@ public class Product {
 
     public void addCategory(ProductCategory productCategory) {
         this.categories.add(productCategory);
+    }
+
+    public void canAddToCart(int count) {
+
+        if (this.status != SellingStatus.SELLING) {
+            throw new IllegalStateException("해당 상품은 판매중이지 않은 상품");
+        }
+
+        if (this.stock < count) {
+            throw new IllegalStateException("해당 상품의 재고가 장바구니에 담은 구매수량보다 적음");
+        }
     }
 }

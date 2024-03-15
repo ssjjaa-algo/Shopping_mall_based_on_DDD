@@ -1,12 +1,9 @@
 package com.toy.mall.user.domain;
 
-import com.toy.mall.cart.domain.Cart;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -27,10 +24,6 @@ public class User {
     @Embedded
     private Address address;
 
-    @OneToOne(fetch = LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
     public User(String loginId, String phoneNumber, Address address) {
         this.loginId = loginId;
         this.phoneNumber = phoneNumber;
@@ -40,4 +33,5 @@ public class User {
     public void changeAddress(Address address) {
         this.address = address;
     }
+
 }

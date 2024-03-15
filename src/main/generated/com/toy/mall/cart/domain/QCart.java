@@ -18,22 +18,38 @@ public class QCart extends EntityPathBase<Cart> {
 
     private static final long serialVersionUID = 797960761L;
 
-    public static final QCart cart = new QCart("cart");
+    private static final PathInits INITS = PathInits.DIRECT2;
 
-    public final ListPath<CartProduct, QCartProduct> cartProducts = this.<CartProduct, QCartProduct>createList("cartProducts", CartProduct.class, QCartProduct.class, PathInits.DIRECT2);
+    public static final QCart cart = new QCart("cart");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final com.toy.mall.product.domain.QProduct product;
+
+    public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
+
+    public final com.toy.mall.user.domain.QUser user;
+
     public QCart(String variable) {
-        super(Cart.class, forVariable(variable));
+        this(Cart.class, forVariable(variable), INITS);
     }
 
     public QCart(Path<? extends Cart> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QCart(PathMetadata metadata) {
-        super(Cart.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QCart(PathMetadata metadata, PathInits inits) {
+        this(Cart.class, metadata, inits);
+    }
+
+    public QCart(Class<? extends Cart> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.product = inits.isInitialized("product") ? new com.toy.mall.product.domain.QProduct(forProperty("product")) : null;
+        this.user = inits.isInitialized("user") ? new com.toy.mall.user.domain.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

@@ -35,6 +35,11 @@ public class ProductRepository implements ProductCommandPort, ProductQueryPort {
     }
 
     @Override
+    public Optional<Product> findById(Long id) {
+        return productJpaRepository.findById(id);
+    }
+
+    @Override
     public void save(Product product) {
         productJpaRepository.save(product);
     }

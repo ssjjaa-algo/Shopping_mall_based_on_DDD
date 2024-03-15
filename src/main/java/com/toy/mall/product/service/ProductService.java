@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class ProductService {
     private final ProductQueryPort productQueryPort;
     private final CategoryQueryPort categoryQueryPort;
 
+    @Transactional
     public void create(ProductServiceCreateRequest serviceRequest) {
 
         Category category = categoryQueryPort.findByName(serviceRequest.getCategory());

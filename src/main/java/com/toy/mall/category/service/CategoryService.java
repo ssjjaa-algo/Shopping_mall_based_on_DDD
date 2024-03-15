@@ -7,6 +7,7 @@ import com.toy.mall.category.service.request.CategoryServiceCreateRequest;
 import com.toy.mall.category.service.response.CategoryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class CategoryService {
 
     private final CategoryCommandPort categoryCommandPort;
     private final CategoryQueryPort categoryQueryPort;
+
+    @Transactional
     public void create(CategoryServiceCreateRequest serviceRequest) {
 
         if (categoryQueryPort.existsByName(serviceRequest.getName())) {

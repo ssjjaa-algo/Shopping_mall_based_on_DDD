@@ -18,6 +18,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -26,6 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
+@ActiveProfiles("test")
 class CartServiceTest {
 
     @Autowired
@@ -45,10 +47,7 @@ class CartServiceTest {
     @Test
     @DisplayName("유저 카트에 상품을 추가")
     public void addCart() {
-        //given
-        categoryDummyData();
-        productDummyData();
-        userService.regist(getUserServiceRegistRequest());
+
         //when
 
         AddProductToCartRequest r = new AddProductToCartRequest(1L, "testId",2);
@@ -67,11 +66,7 @@ class CartServiceTest {
     public void addProductMoreThanProductStock() {
         //given
 
-        categoryDummyData();
-        productDummyData();
-        userService.regist(getUserServiceRegistRequest());
         //when
-
         AddProductToCartRequest r = new AddProductToCartRequest(1L, "testId",31);
 
         //then
@@ -81,10 +76,6 @@ class CartServiceTest {
     @Test
     @DisplayName("장바구니 상품 삭제")
     public void deleteCart() {
-        //given
-        categoryDummyData();
-        productDummyData();
-        userService.regist(getUserServiceRegistRequest());
         //when
 
         AddProductToCartRequest r = new AddProductToCartRequest(1L, "testId",2);

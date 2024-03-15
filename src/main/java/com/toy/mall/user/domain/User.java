@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(indexes = @Index(name = "login_id_idx", columnList = "loginId", unique = true))
+@Table(name = "\"user\"",indexes = @Index(name = "login_id_idx", columnList = "loginId", unique = true))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 

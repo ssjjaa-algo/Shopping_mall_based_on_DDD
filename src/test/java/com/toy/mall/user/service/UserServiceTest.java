@@ -10,10 +10,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
+@ActiveProfiles("test")
 class UserServiceTest {
 
     @Autowired
@@ -32,17 +34,14 @@ class UserServiceTest {
 
         //then
 
-        User user = userRepository.findByLoginId("testId").orElseThrow();
-        Assertions.assertThat(user.getLoginId()).isEqualTo("testId");
+        User user = userRepository.findByLoginId("testId2").orElseThrow();
+        Assertions.assertThat(user.getLoginId()).isEqualTo("testId2");
 
     }
 
     @Test
     @DisplayName("유저 주소 수정")
     public void changeAddress() {
-        //given
-        UserServiceRegistRequest r = getUserServiceRegistRequest();
-        userService.regist(r);
 
         //when
         UserServiceAddressRequest request = new UserServiceAddressRequest(
@@ -61,7 +60,7 @@ class UserServiceTest {
     }
 
     private UserServiceRegistRequest getUserServiceRegistRequest() {
-        String loginId = "testId";
+        String loginId = "testId2";
         String phoneNumber = "010-1234-5678";
         String city = "서울시";
         String street = "강남구";

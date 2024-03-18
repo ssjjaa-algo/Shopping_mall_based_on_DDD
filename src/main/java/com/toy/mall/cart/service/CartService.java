@@ -40,6 +40,6 @@ public class CartService {
         User user = userQueryPort.findByLoginId(serviceRequest.getLoginId())
                 .orElseThrow(() -> new IllegalStateException("유저가 존재하지 않습니다."));
 
-        cartCommandPort.deleteByIdIn(serviceRequest.getIds());
+        cartCommandPort.deleteByUserIdAndIdIn(user.getId(), serviceRequest.getIds());
     }
 }

@@ -20,8 +20,8 @@ public class CartRepository implements CartQueryPort, CartCommandPort {
     }
 
     @Override
-    public void deleteByIdIn(List<Long> ids) {
-        cartJpaRepository.deleteByIdIn(ids);
+    public void deleteByUserIdAndIdIn(Long userId, List<Long> ids) {
+        cartJpaRepository.deleteByUserIdAndIdIn(userId, ids);
     }
 
     @Override

@@ -14,7 +14,7 @@ import static jakarta.persistence.FetchType.*;
 public class ProductCategory {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_category_id")
     private Long id;
 

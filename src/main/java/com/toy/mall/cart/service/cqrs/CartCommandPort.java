@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface CartCommandPort {
     void save(Cart cart);
-
-    void deleteByIdIn(List<Long> ids);
+    void deleteByUserIdAndIdIn(Long id, List<Long> ids);
 }

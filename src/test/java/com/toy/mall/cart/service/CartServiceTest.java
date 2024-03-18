@@ -88,6 +88,10 @@ class CartServiceTest {
 
         List<Cart> carts = cartRepository.findByUserId(1L);
 
+        for (Cart cart : carts) {
+            System.out.println(cart.getProduct().getId());
+        }
+
         assertThat(carts.size()).isEqualTo(0);
     }
 

@@ -15,7 +15,7 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Cart {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
     private Long id;
 

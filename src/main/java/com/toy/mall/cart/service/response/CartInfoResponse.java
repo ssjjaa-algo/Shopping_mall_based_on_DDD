@@ -1,6 +1,5 @@
 package com.toy.mall.cart.service.response;
 
-import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 @Getter
@@ -11,7 +10,6 @@ public class CartInfoResponse {
     private int price;
     private int quantity;
 
-    @QueryProjection
     public CartInfoResponse(Long id, String productName, int price, int quantity) {
         this.id = id;
         this.productName = productName;

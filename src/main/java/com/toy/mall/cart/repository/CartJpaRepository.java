@@ -13,6 +13,6 @@ public interface CartJpaRepository extends JpaRepository<Cart, Long> {
     List<Cart> findByUserId(Long userId);
     @Modifying
     @Query("DELETE FROM Cart c WHERE c.user.id = :userId AND c.id IN :cartIds")
-    void deleteByUserAndCartIdIn(@Param("userId") Long userId, @Param("cartIds") List<Long> cartIds);
+    void deleteByUserAndIdIn(@Param("userId") Long userId, @Param("cartIds") List<Long> cartIds);
 
 }

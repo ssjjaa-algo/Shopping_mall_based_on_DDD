@@ -4,6 +4,7 @@ import com.toy.mall.cart.domain.Cart;
 import com.toy.mall.cart.service.cqrs.CartCommandPort;
 import com.toy.mall.cart.service.request.AddProductToCartServiceRequest;
 import com.toy.mall.cart.service.request.DeleteProductFromCartServiceRequest;
+import com.toy.mall.cart.service.response.CartInfoResponse;
 import com.toy.mall.product.domain.Product;
 import com.toy.mall.product.service.cqrs.ProductQueryPort;
 import com.toy.mall.user.domain.User;
@@ -11,6 +12,8 @@ import com.toy.mall.user.service.cqrs.UserQueryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +44,14 @@ public class CartService {
                 .orElseThrow(() -> new IllegalStateException("유저가 존재하지 않습니다."));
 
         cartCommandPort.deleteByUserAndIdIn(user.getId(), serviceRequest.getIds());
+    }
+
+    @Transactional(readOnly = true)
+    public List<CartInfoResponse> getCarts(String loginId) {
+
+        User user = userQueryPort.findByLoginId(loginId)
+                .orElseThrow(() -> new IllegalStateException("유저가 존재하지 않습니다."));
+
+        return cartCommandPort.findByUser(user.getId());
     }
 }

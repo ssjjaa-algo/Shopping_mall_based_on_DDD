@@ -4,6 +4,7 @@ import com.toy.mall.cart.controller.request.AddProductToCartRequest;
 import com.toy.mall.cart.domain.Cart;
 import com.toy.mall.cart.repository.CartRepository;
 import com.toy.mall.cart.service.request.DeleteProductFromCartServiceRequest;
+import com.toy.mall.cart.service.response.CartInfoResponse;
 import com.toy.mall.category.repository.CategoryRepository;
 import com.toy.mall.category.service.CategoryService;
 import com.toy.mall.product.repository.ProductRepository;
@@ -94,5 +95,21 @@ class CartServiceTest {
         }
 
         assertThat(carts.size()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("장바구니 상품 조회")
+    public void getCarts() {
+        //given
+        AddProductToCartRequest r = new AddProductToCartRequest(1L, "testId",2);
+        AddProductToCartRequest r1 = new AddProductToCartRequest(2L, "testId",17);
+        cartService.add(r.toServiceRequest());
+        cartService.add(r1.toServiceRequest());
+
+        //when
+        List<CartInfoResponse> result = cartService.getCarts("testId");
+
+        //then
+        assertThat(result.size()).isEqualTo(2);
     }
 }

@@ -2,6 +2,7 @@ package com.toy.mall.cart.service;
 
 import com.toy.mall.cart.domain.Cart;
 import com.toy.mall.cart.service.cqrs.CartCommandPort;
+import com.toy.mall.cart.service.cqrs.CartQueryPort;
 import com.toy.mall.cart.service.request.AddProductToCartServiceRequest;
 import com.toy.mall.cart.service.request.DeleteProductFromCartServiceRequest;
 import com.toy.mall.cart.service.response.AllCartResponse;
@@ -23,6 +24,7 @@ public class CartService {
     private final ProductQueryPort productQueryPort;
     private final UserQueryPort userQueryPort;
     private final CartCommandPort cartCommandPort;
+    private final CartQueryPort cartQueryPort;
 
     @Transactional
     public void add(AddProductToCartServiceRequest serviceRequest) {
@@ -54,7 +56,7 @@ public class CartService {
         User user = userQueryPort.findByLoginId(loginId)
                 .orElseThrow(() -> new IllegalStateException("유저가 존재하지 않습니다."));
 
-        List<CartInfoResponse> carts = cartCommandPort.findByUser(user.getId());
+        List<CartInfoResponse> carts = cartQueryPort.findByUser(user.getId());
 
         return new AllCartResponse(carts);
     }

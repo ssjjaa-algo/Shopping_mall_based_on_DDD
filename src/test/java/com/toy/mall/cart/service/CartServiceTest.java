@@ -4,7 +4,7 @@ import com.toy.mall.cart.controller.request.AddProductToCartRequest;
 import com.toy.mall.cart.domain.Cart;
 import com.toy.mall.cart.repository.CartRepository;
 import com.toy.mall.cart.service.request.DeleteProductFromCartServiceRequest;
-import com.toy.mall.cart.service.response.CartInfoResponse;
+import com.toy.mall.cart.service.response.AllCartResponse;
 import com.toy.mall.category.repository.CategoryRepository;
 import com.toy.mall.category.service.CategoryService;
 import com.toy.mall.product.repository.ProductRepository;
@@ -107,9 +107,11 @@ class CartServiceTest {
         cartService.add(r1.toServiceRequest());
 
         //when
-        List<CartInfoResponse> result = cartService.getCarts("testId");
+        AllCartResponse result = cartService.getCarts("testId");
 
+        System.out.println(result.getAmount());
         //then
-        assertThat(result.size()).isEqualTo(2);
+        assertThat(result.getAmount()).isEqualTo(57000);
+        assertThat(result.getCarts().size()).isEqualTo(2);
     }
 }

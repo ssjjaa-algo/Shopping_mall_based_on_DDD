@@ -69,4 +69,9 @@ public class Product {
             throw new IllegalStateException("0개 이상의 수량을 선택해야 합니다.");
         }
     }
+
+    public void deductStock(int count) {
+        checkProductStock(count);
+        this.stock -= count;
+    }
 }

@@ -38,4 +38,13 @@ public class Order {
 
     @Enumerated(STRING)
     private OrderStatus status;
+
+    private Order(User user, ShippingInfo shippingInfo) {
+        this.user = user;
+        this.shippingInfo = shippingInfo;
+    }
+
+    public static Order create(User user, ShippingInfo shippingInfo) {
+        return new Order(user, shippingInfo);
+    }
 }

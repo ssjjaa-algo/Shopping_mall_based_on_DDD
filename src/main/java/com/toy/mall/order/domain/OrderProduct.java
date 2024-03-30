@@ -26,5 +26,16 @@ public class OrderProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    private int count;
+    private int quantity;
+
+    public OrderProduct(Order order, Product product, int quantity) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    public static OrderProduct create(Order order, Product product, int quantity) {
+
+        return new OrderProduct(order, product, quantity);
+    }
 }

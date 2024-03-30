@@ -56,8 +56,17 @@ public class Product {
             throw new IllegalStateException("해당 상품은 판매중이지 않은 상품");
         }
 
-        if (this.stock < count) {
-            throw new IllegalStateException("해당 상품의 재고가 장바구니에 담은 구매수량보다 적음");
+        checkProductStock(count);
+    }
+
+    public void checkProductStock(int count) {
+
+        if (this.stock < count || this.stock <= 0) {
+            throw new IllegalStateException("해당 상품의 재고가 부족합니다.");
+        }
+
+        if (count <= 0) {
+            throw new IllegalStateException("0개 이상의 수량을 선택해야 합니다.");
         }
     }
 }

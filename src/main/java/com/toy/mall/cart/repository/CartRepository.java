@@ -32,6 +32,11 @@ public class CartRepository implements CartQueryPort, CartCommandPort {
     }
 
     @Override
+    public List<Cart> findByUserIdAndCartIdIn(Long id, List<Long> cartIds) {
+        return cartQuerydslRepository.findByUserIdAndIdIn(id, cartIds);
+    }
+
+    @Override
     public List<Cart> findByUserId(Long userId) {
         return cartJpaRepository.findByUserId(userId);
     }

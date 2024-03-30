@@ -10,4 +10,6 @@ public interface CartQueryPort {
     List<Cart> findByUserId(Long userId);
 
     List<CartInfoResponse> findByUser(Long id);
+
+    List<Cart> findByUserIdAndCartIdIn(Long id, List<Long> cartIds);
 }

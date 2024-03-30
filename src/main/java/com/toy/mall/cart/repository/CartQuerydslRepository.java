@@ -36,4 +36,17 @@ public class CartQuerydslRepository {
                         c.getQuantity()))
                 .collect(toList());
     }
+
+    public List<Cart> findByUserIdAndIdIn(Long userId, List<Long> cartIds) {
+
+        return queryFactory
+                .select(cart)
+                .from(cart)
+                .innerJoin(cart.product)
+                .fetchJoin()
+                .where(cart.user.id.eq(userId)
+                        .and(cart.id.in(cartIds)))
+                .fetch();
+
+    }
 }

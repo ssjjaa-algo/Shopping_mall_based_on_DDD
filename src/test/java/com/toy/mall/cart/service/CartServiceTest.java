@@ -5,6 +5,7 @@ import com.toy.mall.cart.domain.Cart;
 import com.toy.mall.cart.repository.CartRepository;
 import com.toy.mall.cart.service.request.DeleteProductFromCartServiceRequest;
 import com.toy.mall.cart.service.response.AllCartResponse;
+import com.toy.mall.cart.service.response.CartInfoResponse;
 import com.toy.mall.category.repository.CategoryRepository;
 import com.toy.mall.category.service.CategoryService;
 import com.toy.mall.product.repository.ProductRepository;
@@ -114,4 +115,30 @@ class CartServiceTest {
         assertThat(result.getAmount()).isEqualTo(57000);
         assertThat(result.getCarts().size()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("장바구니 상품을 카트 Id 별로 조회한다")
+    public void getCartsByCartIds() {
+        //given
+        AddProductToCartRequest r = new AddProductToCartRequest(1L, "testId",2);
+        AddProductToCartRequest r1 = new AddProductToCartRequest(2L, "testId",17);
+        AddProductToCartRequest r2 = new AddProductToCartRequest(3L, "testId",14);
+        cartService.add(r.toServiceRequest());
+        cartService.add(r1.toServiceRequest());
+        cartService.add(r2.toServiceRequest());
+
+        List<CartInfoResponse> responses = cartRepository.findByUser(1L);
+
+        Long cart1 = responses.get(0).getId();
+        Long cart2 = responses.get(1).getId();
+
+        List<Cart> result = cartRepository.findByUserIdAndCartIdIn(1L,List.of(cart1, cart2));
+
+        assertThat(responses.size()).isEqualTo(3);
+        assertThat(result.size()).isEqualTo(2);
+        assertThat(result.get(0).getId()).isEqualTo(cart1);
+
+    }
+
+
 }

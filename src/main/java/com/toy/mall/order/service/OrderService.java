@@ -26,9 +26,5 @@ public class OrderService {
 
         List<Cart> purchases = cartQueryPort.findByUserIdAndCartIdIn(user.getId(), serviceRequest.getCartIds());
 
-        // 상품들의 재고를 확인하며 구매가 가능한지 체크해야 한다.
-
-
-
     }
 }
